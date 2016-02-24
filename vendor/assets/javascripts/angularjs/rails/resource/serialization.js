@@ -79,6 +79,7 @@
                     this.customSerializers = {};
                     this.nestedResources = {};
                     this.castedResources = {};
+                    this.customDeserializeFn = undefined;
                     this.options = angular.extend({excludeByDefault: false}, defaultOptions, options || {});
 
                     if (customizer) {
@@ -494,9 +495,15 @@
                     return result;
                 };
 
-                Serializer.prototype.deserializeObject = function (result, data) {
+                Serializer.prototype.customDeserialize = function (fn) {
+                    this.customDeserializeFn = fn;
+                };
 
+                Serializer.prototype.deserializeObject = function (result, data) {
                     var tthis = this;
+                    if (typeof this.customDeserializeFn === "function"){
+                        data = this.customDeserializeFn.call(null, data);
+                    }
                     angular.forEach(data, function (value, key) {
                         tthis.deserializeAttribute(result, key, value);
                     });
