@@ -78,6 +78,7 @@
                     this.preservedAttributes = {};
                     this.customSerializers = {};
                     this.nestedResources = {};
+                    this.castedResources = {};
                     this.options = angular.extend({excludeByDefault: false}, defaultOptions, options || {});
 
                     if (customizer) {
@@ -156,6 +157,11 @@
                         this.serializeWith(attributeName, serializer);
                     }
 
+                    return this;
+                };
+
+                Serializer.prototype.cast = function (type, resource) {
+                    this.castedResources[type] = resource;
                     return this;
                 };
 
@@ -458,7 +464,8 @@
                  */
                 Serializer.prototype.deserializeData = function (data, Resource) {
                     var result = data,
-                        self = this;
+                        self = this,
+                        castedResource;
 
                     if (angular.isArray(data)) {
                         result = [];
@@ -471,8 +478,12 @@
                             return data;
                         }
                         result = {};
+                        castedResource = self.castedResources[data.type];
 
-                        if (Resource) {
+                        if (castedResource) {
+                            var resourceConstructor = RailsResourceInjector.getDependency(castedResource);
+                            result = new resourceConstructor();
+                        } else if (Resource) {
                             result = new Resource.config.resourceConstructor();
                         }
 
