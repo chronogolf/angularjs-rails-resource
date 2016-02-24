@@ -742,6 +742,16 @@
                     return this['$' + this.constructor.config.updateMethod](this.$url(), this);
                 };
 
+                RailsResource.prototype.patch = function () {
+                    var slice = [].slice,
+                        keys = 1 <= arguments.length ? slice.call(arguments, 0) : [],
+                        that = angular.copy(this);
+                    angular.forEach(angular.copy(this), function(value, key) {
+                        if (keys.indexOf(key) === -1) { that[key] = undefined; }
+                    });
+                    return that.$patch(this.$url());
+                };
+
                 RailsResource.prototype.get = function () {
                     return this.constructor.$http(angular.extend({method: 'GET', url: this.$url()}, this.constructor.getHttpConfig()), this);
                 };
