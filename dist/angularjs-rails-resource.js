@@ -1,6 +1,6 @@
 /**
  * A resource factory inspired by $resource from AngularJS
- * @version v2.1.0 - 2016-02-24
+ * @version v2.1.1 - 2016-02-26
  * @link https://github.com/FineLinePrototyping/angularjs-rails-resource.git
  * @author 
  */
@@ -1505,6 +1505,11 @@
 
                 RailsResource.prototype.get = function () {
                     return this.constructor.$http(angular.extend({method: 'GET', url: this.$url()}, this.constructor.getHttpConfig()), this);
+                };
+
+                RailsResource.prototype.getRelated = function (path, queryParams, resource) {
+                    var Resource = resource ? RailsResourceInjector.getDependency(resource) : this.constructor;
+                    return Resource.$get(this.$url(path), queryParams);
                 };
 
                 RailsResource.prototype.isNew = function () {

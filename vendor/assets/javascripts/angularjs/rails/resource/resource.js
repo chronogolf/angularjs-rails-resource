@@ -756,6 +756,11 @@
                     return this.constructor.$http(angular.extend({method: 'GET', url: this.$url()}, this.constructor.getHttpConfig()), this);
                 };
 
+                RailsResource.prototype.getRelated = function (path, queryParams, resource) {
+                    var Resource = resource ? RailsResourceInjector.getDependency(resource) : this.constructor;
+                    return Resource.$get(this.$url(path), queryParams);
+                };
+
                 RailsResource.prototype.isNew = function () {
                     var idAttribute = this.constructor.config.idAttribute;
                     return angular.isUndefined(this[idAttribute]) ||
