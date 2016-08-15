@@ -1,6 +1,6 @@
 /**
  * A resource factory inspired by $resource from AngularJS
- * @version v2.2.0 - 2016-08-15
+ * @version v2.2.1 - 2016-08-15
  * @link https://github.com/FineLinePrototyping/angularjs-rails-resource.git
  * @author 
  */
