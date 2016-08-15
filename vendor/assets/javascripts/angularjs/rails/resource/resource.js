@@ -726,11 +726,10 @@
                         return this.$http(angular.extend({method: method, url: url, data: data}, this.getHttpConfig()), null, resourceConfigOverrides);
                     };
 
-                    RailsResource.prototype['$' + method] = function (url) {
+                    RailsResource.prototype['$' + method] = function (url, queryParams) {
                         // clone so we can manipulate w/o modifying the actual instance
                         var data = angular.copy(this, {});
-                        return this.constructor.$http(angular.extend({method: method, url: url, data: data}, this.constructor.getHttpConfig()), this);
-
+                        return this.constructor.$http(angular.extend({method: method, url: url, data: data}, this.constructor.getHttpConfig(queryParams)), this);
                     };
                 });
 
@@ -742,14 +741,13 @@
                     return this['$' + this.constructor.config.updateMethod](this.$url(), this);
                 };
 
-                RailsResource.prototype.patch = function () {
-                    var slice = [].slice,
-                        keys = 1 <= arguments.length ? slice.call(arguments, 0) : [],
-                        that = angular.copy(this);
-                    angular.forEach(angular.copy(this), function(value, key) {
-                        if (keys.indexOf(key) === -1) { that[key] = undefined; }
-                    });
-                    return that.$patch(this.$url());
+                RailsResource.prototype.patch = function(attributesList, queryParams) {
+                  var that = angular.copy(this);
+
+                  angular.forEach(angular.copy(this), function(value, key) {
+                    if (attributesList.indexOf(key) === -1) { that[key] = undefined; }
+                  });
+                  return that.$patch(this.$url(), queryParams);
                 };
 
                 RailsResource.prototype.get = function () {
