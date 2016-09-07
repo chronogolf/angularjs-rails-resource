@@ -1,6 +1,6 @@
 /**
  * A resource factory inspired by $resource from AngularJS
- * @version v2.2.1 - 2016-08-15
+ * @version v2.3.0 - 2016-09-07
  * @link https://github.com/FineLinePrototyping/angularjs-rails-resource.git
  * @author 
  */
@@ -1471,13 +1471,13 @@
                 };
 
                 angular.forEach(['post', 'put', 'patch'], function (method) {
-                    RailsResource['$' + method] = function (url, data, resourceConfigOverrides) {
+                    RailsResource['$' + method] = function (url, data, resourceConfigOverrides, queryParams) {
                         // clone so we can manipulate w/o modifying the actual instance
                         data = angular.copy(data);
-                        return this.$http(angular.extend({method: method, url: url, data: data}, this.getHttpConfig()), null, resourceConfigOverrides);
+                        return this.$http(angular.extend({method: method, url: url, data: data}, this.getHttpConfig(queryParams)), null, resourceConfigOverrides);
                     };
 
-                    RailsResource.prototype['$' + method] = function (url, queryParams) {
+                    RailsResource.prototype['$' + method] = function (url, context, queryParams) {
                         // clone so we can manipulate w/o modifying the actual instance
                         var data = angular.copy(this, {});
                         return this.constructor.$http(angular.extend({method: method, url: url, data: data}, this.constructor.getHttpConfig(queryParams)), this);

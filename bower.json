@@ -1,7 +1,7 @@
 {
   "name": "angularjs-rails-resource",
   "version": "2.3.0",
-  "main": "angularjs-rails-resource.js",
+  "main": "dist/angularjs-rails-resource.js",
   "description": "A resource factory inspired by $resource from AngularJS",
   "repository": {
     "type": "git",
