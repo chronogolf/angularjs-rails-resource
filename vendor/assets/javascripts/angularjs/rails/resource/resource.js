@@ -747,7 +747,7 @@
                   angular.forEach(angular.copy(this), function(value, key) {
                     if (attributesList.indexOf(key) === -1) { that[key] = undefined; }
                   });
-                  return that.$patch(this.$url(), queryParams);
+                  return that.$patch(this.$url(), this, queryParams);
                 };
 
                 RailsResource.prototype.get = function () {
