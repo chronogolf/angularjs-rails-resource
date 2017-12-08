@@ -1,7 +1,7 @@
 {
   "name": "angularjs-rails-resource",
   "description" : "A resource factory inspired by $resource from AngularJS",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "main" : "dist/angularjs-rails-resource.js",
   "homepage" : "https://github.com/FineLinePrototyping/angularjs-rails-resource.git",
   "author" : "",
@@ -13,9 +13,6 @@
     "angular",
     "resources"
   ],
-  "dependencies": {
-    "angular": "~1.0"
-  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
